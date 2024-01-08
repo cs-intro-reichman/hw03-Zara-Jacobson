@@ -5,7 +5,7 @@ public class LoanCalc {
 	
 	static double epsilon = 0.001;  // The computation tolerance (estimation error)
 	static int iterationCounter;    // Monitors the efficiency of the calculation
-
+	static int g = 0;
     /** 
      * Gets the loan data and computes the periodical payment.
      * Expects to get three command-line arguments: sum of the loan (double),
@@ -46,7 +46,6 @@ public class LoanCalc {
 	 		iterationCounter++; 
 	 	} 
 
-
     	return g;
     }
     
@@ -61,7 +60,7 @@ public class LoanCalc {
     	iterationCounter = 0;
     	double L = 0;
     	double H = loan;
-    	double g = (H + L)/2;
+    	double g = (H+L)/2;
     	while ((H - L) > epsilon) {
     		if (endBalance(loan,rate,n,g)*endBalance(loan,rate,n,L) > 0) {
     			L = g;
@@ -80,11 +79,13 @@ public class LoanCalc {
 	*/
 	private static double endBalance(double loan, double rate, int n, double payment) {
 		// Replace the following statement with your code
-		double endBalance = 0;
+		double endBal = 0;
+		double presentBal = loan;
 		for (int i = 0; i<n; i++) {
-			endBalance = (endBalance - payment)*(1 + rate/100);
+			endBal = (presentBal - payment)*(1 + rate/100);
+			presentBal = endBal;
 		}
 
-    	return endBalance;
+    	return endBal;
 	}
 }
